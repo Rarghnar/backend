@@ -9,7 +9,7 @@ const router: Router = express.Router();
 router.get("/all", async function(req: Request, res: Response){
 
     try {
-        const result: Admin[] = await adminRepository.getAdmin();
+        const result: Admin[] = await adminController.getAdmin();
         responseModule.success(req,res,result);
 
     } catch (error) {
@@ -21,7 +21,7 @@ router.get("/all", async function(req: Request, res: Response){
 router.get("/:id", async function(req: Request, res: Response){
     const id: string = req.params['id'];
     try {
-        const result: Admin | null = await adminRepository.getAdminById(id);
+        const result: Admin | null = await adminController.getAdminById(id);
         responseModule.success(req,res,result);
 
     } catch (error) {
@@ -34,7 +34,7 @@ router.post("/add", async function(req: Request, res: Response){
 
     const body: Admin = req.body;
     try {
-        const result: Admin = await adminRepository.addAdmin(body);
+        const result: Admin = await adminController.addAdmin(body);
         responseModule.success(req,res,result,201);    
     } catch (error) {
         responseModule.error(req,res,"Error desconocido");
@@ -44,7 +44,7 @@ router.post("/add", async function(req: Request, res: Response){
 
 router.delete("/delete", async function (req: Request, res: Response) {
     try {
-      const ver = await adminRepository.deleteAdmin(req.body._id);
+      const ver = await adminController.deleteAdmin(req.body._id);
       if (ver != null) {
         responseModule.success(req, res, "Delete Success", 200);
       } else {
@@ -58,7 +58,7 @@ router.delete("/delete", async function (req: Request, res: Response) {
 router.patch("/:id", async function(req: Request, res: Response){
     const { id } = req.params;
     try {
-        const modPaciente = await adminRepository.patchAdmin(id, req.body);
+        const modPaciente = await adminController.patchAdmin(id, req.body);
         responseModule.success(req,res,modPaciente,201);    
     } catch (error) {
         console.log(id);
